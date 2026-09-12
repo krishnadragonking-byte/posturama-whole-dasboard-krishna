@@ -1,0 +1,94 @@
+/* ============================================================================
+   Posturama — Activity History
+   ========================================================================== */
+
+.hist-shell {
+  min-height: 100%;
+  padding: clamp(1rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+  background: var(--pt-bg);
+}
+
+.hist-container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hist-title {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 780;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+}
+.hist-subtitle {
+  font-size: 0.92rem;
+  color: var(--pt-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.hist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.hist-item {
+  padding: 1.1rem 1.25rem;
+}
+.hist-item__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.hist-item__date {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.hist-item__type {
+  font-size: 0.8rem;
+  color: var(--pt-text-muted);
+  margin-top: 0.1rem;
+}
+.hist-item__summary {
+  font-size: 0.9rem;
+  color: var(--pt-text-muted);
+}
+
+.hist-empty {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+.hist-empty__title {
+  font-size: 1.1rem;
+  font-weight: 720;
+  margin-bottom: 0.4rem;
+}
+.hist-empty__body {
+  font-size: 0.92rem;
+  color: var(--pt-text-muted);
+  max-width: 40ch;
+  margin: 0 auto 1.25rem;
+}
+
+.hist-skeleton {
+  height: 4.5rem;
+  border-radius: var(--pt-radius-lg);
+  background: var(--pt-surface-muted);
+  animation: hist-pulse 1.4s ease-in-out infinite;
+}
+@keyframes hist-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.hist-error {
+  font-size: 0.9rem;
+  color: #b23b3b;
+}

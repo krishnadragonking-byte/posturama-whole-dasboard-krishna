@@ -1,0 +1,152 @@
+/* ============================================================================
+   Posturama — design tokens & base styles
+   A warm, playful green + lime palette. Light + dark aware.
+   ========================================================================== */
+
+:root {
+  /* Brand — dark green for text/links/icons, lime reserved for CTA buttons */
+  --pt-teal-50: #edf5eb;
+  --pt-teal-100: #dcefd2;
+  --pt-teal-300: #bae269;
+  --pt-teal-500: #6a8f80;
+  --pt-teal-600: #173f35;
+  --pt-teal-700: #0f2c25;
+  --pt-ink: #173f35;
+
+  /* Primary CTA accent — a bright lime pill with dark text, not light text */
+  --pt-accent: #bae269;
+  --pt-accent-hover: #a8d84f;
+  --pt-accent-ink: #173f35;
+
+  /* Category card palette (pastel variety, used sparingly for visual pop) */
+  --pt-peach: #ffd8cf;
+  --pt-pink: #f6d8e4;
+  --pt-lavender: #e5dcf6;
+  --pt-yellow: #f8e89d;
+
+  /* Neutrals (light) */
+  --pt-bg: #fbfaf4;
+  --pt-bg-elevated: #ffffff;
+  --pt-surface: #ffffff;
+  --pt-surface-muted: #f2f0e2;
+  --pt-border: #e8e4d3;
+  --pt-border-strong: #d7d1b7;
+  --pt-text: #173f35;
+  --pt-text-muted: #718078;
+  --pt-text-faint: #96a49a;
+
+  /* Status */
+  --pt-good: #3f7a5c;
+  --pt-good-bg: #edf5eb;
+  --pt-adjust: #b74c39;
+  --pt-adjust-bg: #ffd8cf;
+  --pt-info: #5b4b8a;
+  --pt-info-bg: #e5dcf6;
+
+  /* Demonstrator figure */
+  --pt-figure: #7a9186;
+  --pt-figure-edge: #445b50;
+
+  /* Elevation */
+  --pt-shadow-sm: 0 1px 2px rgba(20, 33, 31, 0.06), 0 1px 3px rgba(20, 33, 31, 0.04);
+  --pt-shadow-md: 0 4px 12px rgba(20, 33, 31, 0.08), 0 2px 4px rgba(20, 33, 31, 0.04);
+  --pt-shadow-lg: 0 16px 48px rgba(20, 33, 31, 0.12), 0 4px 12px rgba(20, 33, 31, 0.06);
+
+  /* Radii & spacing */
+  --pt-radius-sm: 10px;
+  --pt-radius-md: 18px;
+  --pt-radius-lg: 28px;
+  --pt-radius-pill: 999px;
+
+  /* Type — self-hosted (see main.tsx), no external font requests */
+  --pt-font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --pt-font-display: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --pt-focus: 0 0 0 3px var(--pt-teal-300), 0 0 0 5px rgba(186, 226, 105, 0.45);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pt-bg: #101c17;
+    --pt-bg-elevated: #16241e;
+    --pt-surface: #182922;
+    --pt-surface-muted: #1f3129;
+    --pt-border: #2a3d34;
+    --pt-border-strong: #3a4f43;
+    --pt-text: #eef3ea;
+    --pt-text-muted: #a9baaf;
+    --pt-text-faint: #8496908f;
+
+    --pt-good-bg: #16332a;
+    --pt-adjust-bg: #3d2a20;
+    --pt-info-bg: #2a2340;
+
+    --pt-figure: #8ba39c;
+    --pt-figure-edge: #c2d2cd;
+
+    --pt-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --pt-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+    --pt-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.55);
+
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--pt-font);
+  background: var(--pt-bg);
+  color: var(--pt-text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--pt-font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--pt-focus);
+  border-radius: var(--pt-radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

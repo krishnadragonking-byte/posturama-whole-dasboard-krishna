@@ -1,0 +1,1 @@
+export { PostureCheckModule } from './PostureCheckModule'

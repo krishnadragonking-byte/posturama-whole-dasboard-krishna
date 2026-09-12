@@ -1,0 +1,256 @@
+/* ============================================================================
+   Posturama — shared UI primitives
+   ========================================================================== */
+
+/* ---- Button ------------------------------------------------------------- */
+.pt-btn {
+  --_bg: var(--pt-accent);
+  --_fg: var(--pt-accent-ink);
+  --_border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.75rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--_fg);
+  background: var(--_bg);
+  border: 1.5px solid var(--_border);
+  border-radius: var(--pt-radius-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.16s ease, box-shadow 0.16s ease;
+  text-decoration: none;
+}
+.pt-btn:hover:not(:disabled) {
+  --_bg: var(--pt-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--pt-shadow-md);
+}
+.pt-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.pt-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pt-btn--secondary {
+  --_bg: transparent;
+  --_fg: var(--pt-text);
+  --_border: var(--pt-border-strong);
+}
+.pt-btn--secondary:hover:not(:disabled) {
+  --_bg: var(--pt-surface-muted);
+}
+.pt-btn--ghost {
+  --_bg: transparent;
+  --_fg: var(--pt-teal-600);
+  --_border: transparent;
+  min-height: 40px;
+  padding: 0.5rem 0.9rem;
+}
+.pt-btn--ghost:hover:not(:disabled) {
+  --_bg: var(--pt-teal-50);
+}
+.pt-btn--danger {
+  --_bg: transparent;
+  --_fg: #b23b3b;
+  --_border: #d9a3a3;
+}
+.pt-btn--danger:hover:not(:disabled) {
+  --_bg: rgba(178, 59, 59, 0.08);
+}
+.pt-btn--block {
+  width: 100%;
+}
+.pt-btn--lg {
+  min-height: 56px;
+  font-size: 1.06rem;
+  padding: 0.9rem 1.8rem;
+}
+
+/* ---- Card ------------------------------------------------------------- */
+.pt-card {
+  background: var(--pt-surface);
+  border: 1px solid var(--pt-border);
+  border-radius: var(--pt-radius-lg);
+  box-shadow: var(--pt-shadow-sm);
+}
+.pt-card--pad {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+/* ---- Status pill ---------------------------------------------------------- */
+.pt-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.55rem;
+  border-radius: var(--pt-radius-pill);
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.pt-pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.pt-pill--good {
+  color: var(--pt-good);
+  background: var(--pt-good-bg);
+  border-color: color-mix(in srgb, var(--pt-good) 25%, transparent);
+}
+.pt-pill--adjust {
+  color: var(--pt-adjust);
+  background: var(--pt-adjust-bg);
+  border-color: color-mix(in srgb, var(--pt-adjust) 25%, transparent);
+}
+.pt-pill--info {
+  color: var(--pt-info);
+  background: var(--pt-info-bg);
+  border-color: color-mix(in srgb, var(--pt-info) 25%, transparent);
+}
+
+/* ---- Progress bar ------------------------------------------------------- */
+.pt-progress {
+  width: 100%;
+  height: 10px;
+  border-radius: var(--pt-radius-pill);
+  background: var(--pt-surface-muted);
+  overflow: hidden;
+}
+.pt-progress__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--pt-teal-500), var(--pt-teal-600));
+  transition: width 0.3s ease;
+}
+.pt-progress__fill--paused {
+  background: var(--pt-adjust);
+}
+
+/* ---- Section heading -------------------------------------------------- */
+.pt-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pt-teal-600);
+}
+
+/* ---- Notice (safety / privacy) --------------------------------------- */
+.pt-notice {
+  display: flex;
+  gap: 0.85rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--pt-radius-md);
+  background: var(--pt-surface-muted);
+  border: 1px solid var(--pt-border);
+}
+.pt-notice__icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--pt-teal-600);
+}
+.pt-notice__title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+}
+.pt-notice__body {
+  font-size: 0.9rem;
+  color: var(--pt-text-muted);
+}
+.pt-notice--safety .pt-notice__icon {
+  color: var(--pt-info);
+}
+
+/* ---- App header (Dashboard / History / Posture Check) ----------------- */
+.pt-appheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+.pt-appheader__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+.pt-appheader__logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: linear-gradient(140deg, var(--pt-teal-500), var(--pt-teal-700));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: none;
+  box-shadow: var(--pt-shadow-sm);
+}
+.pt-appheader__logo svg {
+  width: 20px;
+  height: 20px;
+}
+.pt-appheader__wordmark {
+  font-weight: 780;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+.pt-appheader__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  background: var(--pt-surface-muted);
+  border-radius: var(--pt-radius-pill);
+}
+.pt-appheader__link {
+  border: none;
+  background: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--pt-radius-pill);
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: var(--pt-text-muted);
+  cursor: pointer;
+}
+.pt-appheader__link.is-active {
+  background: var(--pt-surface);
+  color: var(--pt-text);
+  box-shadow: var(--pt-shadow-sm);
+}
+.pt-appheader__user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.pt-appheader__name {
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: var(--pt-text-muted);
+  max-width: 16ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .pt-appheader__name {
+    display: none;
+  }
+}

@@ -1,0 +1,1 @@
+export { NeckPostureModule } from './NeckPostureModule'

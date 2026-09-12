@@ -1,0 +1,1 @@
+export { CoupleSmileModule } from './CoupleSmileModule'

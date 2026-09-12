@@ -1,0 +1,137 @@
+/* ============================================================================
+   Posturama — Auth (log in / sign up)
+   ========================================================================== */
+
+.auth-shell {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 5vw, 3rem) 1.25rem;
+  background:
+    radial-gradient(120% 50% at 100% 0%, var(--pt-teal-100) 0%, transparent 55%),
+    var(--pt-bg);
+}
+@media (prefers-color-scheme: dark) {
+  .auth-shell {
+    background:
+      radial-gradient(120% 50% at 100% 0%, rgba(22, 163, 127, 0.14) 0%, transparent 55%),
+      var(--pt-bg);
+  }
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  width: 100%;
+}
+.auth-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: linear-gradient(140deg, var(--pt-teal-500), var(--pt-teal-700));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: none;
+}
+.auth-logo svg {
+  width: 20px;
+  height: 20px;
+}
+.auth-wordmark {
+  font-weight: 780;
+  font-size: 1.15rem;
+}
+
+.auth-card {
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.auth-title {
+  font-size: 1.4rem;
+  font-weight: 780;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+}
+.auth-subtitle {
+  font-size: 0.92rem;
+  color: var(--pt-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+.auth-field label {
+  font-size: 0.85rem;
+  font-weight: 650;
+  color: var(--pt-text);
+}
+.auth-field input {
+  min-height: 48px;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--pt-radius-sm);
+  border: 1.5px solid var(--pt-border-strong);
+  background: var(--pt-surface);
+  color: var(--pt-text);
+  font-size: 1rem;
+  font-family: inherit;
+}
+.auth-field input:focus-visible {
+  outline: none;
+  box-shadow: var(--pt-focus);
+  border-color: var(--pt-teal-500);
+}
+.auth-field small {
+  font-size: 0.78rem;
+  color: var(--pt-text-faint);
+}
+
+.auth-error {
+  font-size: 0.88rem;
+  color: #b23b3b;
+  background: rgba(178, 59, 59, 0.08);
+  border: 1px solid rgba(178, 59, 59, 0.25);
+  border-radius: var(--pt-radius-sm);
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 1.1rem;
+}
+
+.auth-switch {
+  margin-top: 1.35rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--pt-text-muted);
+}
+.auth-switch button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 650;
+  color: var(--pt-teal-600);
+  cursor: pointer;
+}
+
+.auth-fineprint {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--pt-text-faint);
+}

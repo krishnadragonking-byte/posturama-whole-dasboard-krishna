@@ -1,0 +1,295 @@
+/* ============================================================================
+   Posturama — Home page
+   ========================================================================== */
+
+.home-shell {
+  min-height: 100%;
+  padding: clamp(1rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+  background:
+    radial-gradient(120% 50% at 100% 0%, var(--pt-teal-100) 0%, transparent 55%),
+    radial-gradient(80% 40% at 0% 20%, color-mix(in srgb, var(--pt-teal-300) 22%, transparent) 0%, transparent 60%),
+    var(--pt-bg);
+  animation: home-fade-in 0.4s ease;
+}
+@media (prefers-color-scheme: dark) {
+  .home-shell {
+    background:
+      radial-gradient(120% 50% at 100% 0%, rgba(22, 163, 127, 0.14) 0%, transparent 55%),
+      radial-gradient(80% 40% at 0% 20%, rgba(127, 216, 189, 0.08) 0%, transparent 60%),
+      var(--pt-bg);
+  }
+}
+@keyframes home-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.home-container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ---- Header ------------------------------------------------------------ */
+.home-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-bottom: clamp(2rem, 6vw, 3.5rem);
+}
+.home-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.home-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(140deg, var(--pt-teal-500), var(--pt-teal-700));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: none;
+  box-shadow: var(--pt-shadow-sm);
+}
+.home-logo svg {
+  width: 22px;
+  height: 22px;
+}
+.home-wordmark {
+  display: block;
+  font-weight: 780;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.home-tagline {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--pt-text-muted);
+  max-width: 34ch;
+}
+
+.home-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border-radius: var(--pt-radius-pill);
+  background: var(--pt-surface);
+  border: 1px solid var(--pt-border);
+  box-shadow: var(--pt-shadow-sm);
+  height: fit-content;
+}
+.home-nav__link {
+  min-height: 38px;
+  padding: 0.45rem 1rem;
+  border-radius: var(--pt-radius-pill);
+  border: none;
+  background: transparent;
+  color: var(--pt-text-muted);
+  font-weight: 650;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.home-nav__link:hover {
+  color: var(--pt-text);
+  background: var(--pt-surface-muted);
+}
+.home-nav__link.is-active {
+  background: var(--pt-teal-600);
+  color: #fff;
+}
+
+/* ---- Hero --------------------------------------------------------------- */
+.home-hero {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  margin-bottom: clamp(3rem, 8vw, 5rem);
+}
+@media (min-width: 880px) {
+  .home-hero {
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 1fr);
+  }
+}
+.home-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pt-teal-600);
+  margin-bottom: 0.75rem;
+}
+.home-title {
+  font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  margin-bottom: 1rem;
+}
+.home-subtitle {
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  color: var(--pt-text-muted);
+  max-width: 46ch;
+  margin-bottom: 1.75rem;
+}
+.home-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.home-hero__visual {
+  display: flex;
+  justify-content: center;
+}
+.home-hero__art {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--pt-radius-lg);
+  filter: drop-shadow(0 16px 40px rgba(20, 33, 31, 0.14));
+  animation: home-float 5s ease-in-out infinite;
+}
+@keyframes home-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ---- Sections / cards ----------------------------------------------------- */
+.home-section {
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  scroll-margin-top: 1.5rem;
+}
+.home-section-title {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.home-cards {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.home-card {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.home-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--pt-shadow-lg);
+}
+.home-card__icon {
+  font-size: 2.1rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.home-card__title {
+  font-size: 1.2rem;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
+.home-card__desc {
+  font-size: 0.95rem;
+  color: var(--pt-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* Pastel category tints — border stays neutral so focus/hover states still read clearly. */
+.home-card--peach {
+  background: var(--pt-peach);
+  border-color: transparent;
+}
+.home-card--lavender {
+  background: var(--pt-lavender);
+  border-color: transparent;
+}
+.home-card--yellow {
+  background: var(--pt-yellow);
+  border-color: transparent;
+}
+.home-card--pink {
+  background: var(--pt-pink);
+  border-color: transparent;
+}
+
+/* ---- Technology / research grid ------------------------------------------ */
+.home-tech-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.home-tech-card {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding: 1.1rem 1.2rem;
+}
+.home-tech-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.home-tech-card__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  flex: none;
+}
+.home-tech-card__name {
+  font-weight: 720;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+.home-tech-card__org {
+  font-size: 0.76rem;
+  color: var(--pt-text-muted);
+}
+.home-tech-card__desc {
+  font-size: 0.86rem;
+  color: var(--pt-text-muted);
+}
+.home-tech-card__link {
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--pt-teal-600);
+  text-decoration: none;
+  justify-self: start;
+}
+.home-tech-card__link:hover {
+  text-decoration: underline;
+}
+
+/* ---- Footer --------------------------------------------------------------- */
+.home-footer {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--pt-border);
+  font-size: 0.82rem;
+  color: var(--pt-text-faint);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__art {
+    animation: none;
+  }
+}

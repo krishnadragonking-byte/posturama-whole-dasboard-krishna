@@ -1,0 +1,24 @@
+# Netlify / Cloudflare Pages: build the app and publish the static output.
+# `npm run build` runs `prebuild` first, which downloads the on-device pose
+# model (~5.5 MB) once during the build.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The dashboard's server-side routes (auth, posture history, the OpenAI
+# vision proxy) live here as Netlify Functions — see netlify/functions/.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# `netlify dev` proxies the Vite dev server and serves the functions above on
+# the same origin, so `npm run dev:netlify` is the way to exercise the full
+# stack locally (plain `npm run dev` only serves the static frontend).
+[dev]
+  framework = "vite"
+  targetPort = 5173
+  port = 8888
+  autoLaunch = false

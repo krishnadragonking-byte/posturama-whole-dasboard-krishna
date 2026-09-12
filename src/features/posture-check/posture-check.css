@@ -1,0 +1,269 @@
+/* ============================================================================
+   Posturama — Posture Check flow (consent → camera → capture → result)
+   ========================================================================== */
+
+.pchk-shell {
+  min-height: 100%;
+  padding: clamp(1rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem) 4rem;
+  background:
+    radial-gradient(120% 60% at 100% 0%, var(--pt-teal-50) 0%, transparent 55%),
+    var(--pt-bg);
+}
+@media (prefers-color-scheme: dark) {
+  .pchk-shell {
+    background:
+      radial-gradient(120% 60% at 100% 0%, rgba(22, 163, 127, 0.12) 0%, transparent 55%),
+      var(--pt-bg);
+  }
+}
+
+.pchk-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pchk-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+.pchk-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 34px;
+  padding: 0.35rem 0.75rem 0.35rem 0.6rem;
+  margin-right: 0.25rem;
+  border: 1px solid var(--pt-border-strong);
+  border-radius: var(--pt-radius-pill);
+  background: var(--pt-surface);
+  color: var(--pt-text-muted);
+  font-size: 0.85rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+.pchk-back:hover {
+  background: var(--pt-surface-muted);
+  color: var(--pt-text);
+}
+.pchk-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: linear-gradient(140deg, var(--pt-teal-500), var(--pt-teal-700));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: none;
+}
+.pchk-logo svg {
+  width: 22px;
+  height: 22px;
+}
+.pchk-wordmark {
+  font-weight: 750;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.pchk-screen {
+  animation: pchk-screen-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@keyframes pchk-screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.pchk-grid {
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.75rem);
+}
+@media (min-width: 900px) {
+  .pchk-grid--split {
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr);
+    align-items: start;
+  }
+}
+.pchk-grid.pchk-center {
+  min-height: min(58vh, 560px);
+  align-content: center;
+}
+
+.pchk-stack {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.pchk-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pt-teal-600);
+}
+.pchk-title {
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.pchk-subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  color: var(--pt-text-muted);
+  max-width: 52ch;
+}
+.pchk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.pchk-fineprint {
+  font-size: 0.82rem;
+  color: var(--pt-text-faint);
+}
+.pchk-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--pt-text-muted);
+  font-size: 0.94rem;
+}
+
+/* ---- Camera / capture stage -------------------------------------------- */
+.pchk-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--pt-radius-lg);
+  overflow: hidden;
+  background: #0c1412;
+  border: 1px solid var(--pt-border);
+  box-shadow: var(--pt-shadow-md);
+}
+.pchk-stage__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror, like a selfie camera */
+  display: block;
+}
+.pchk-stage__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pchk-stage__scrim {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(12, 20, 18, 0.72);
+  color: #fff;
+}
+.pchk-stage__scrim h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+}
+.pchk-stage__scrim p {
+  font-size: 0.88rem;
+  opacity: 0.85;
+  max-width: 36ch;
+  margin: 0 auto;
+}
+.pchk-spinner {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 0.85rem;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  animation: pchk-spin 0.8s linear infinite;
+}
+@keyframes pchk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Result screen ------------------------------------------------------ */
+.pchk-result-status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+.pchk-check-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+}
+.pchk-check-list li {
+  display: flex;
+  gap: 0.55rem;
+}
+.pchk-check-list li::before {
+  content: '✓';
+  color: var(--pt-good);
+  font-weight: 700;
+  flex: none;
+}
+.pchk-suggestion-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+}
+.pchk-suggestion-list li {
+  display: flex;
+  gap: 0.55rem;
+}
+.pchk-suggestion-list li::before {
+  content: '•';
+  color: var(--pt-teal-600);
+  flex: none;
+}
+
+.pchk-save-status {
+  font-size: 0.85rem;
+  color: var(--pt-text-muted);
+}
+.pchk-save-status.is-error {
+  color: #b23b3b;
+}
+
+.pchk-upload-fallback {
+  text-align: center;
+}
+.pchk-upload-fallback input {
+  display: none;
+}
+
+.pchk-description-input {
+  width: 100%;
+  resize: vertical;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--pt-radius-sm);
+  border: 1.5px solid var(--pt-border-strong);
+  background: var(--pt-surface);
+  color: var(--pt-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+.pchk-description-input:focus-visible {
+  outline: none;
+  box-shadow: var(--pt-focus);
+  border-color: var(--pt-teal-500);
+}
