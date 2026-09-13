@@ -8,6 +8,12 @@ interface RequestCodeResult {
   ok: true
   /** Only ever present in local dev (netlify dev) — see auth-request-code.ts. */
   debugCode?: string
+  /**
+   * Only present on the stateless Vercel deployment target (see
+   * api/auth/request-code.ts) — must be carried through to verifyCode
+   * unchanged. The Netlify backend ignores it if present.
+   */
+  verificationToken?: string
 }
 
 interface AuthContextValue {
@@ -18,7 +24,7 @@ interface AuthContextValue {
   /** Emails a 6-digit sign-in code to this address (works for both new and returning users). */
   requestCode: (email: string) => Promise<RequestCodeResult>
   /** Verifies the code; `name` is only used the first time an email signs in. */
-  verifyCode: (input: { email: string; code: string; name?: string }) => Promise<void>
+  verifyCode: (input: { email: string; code: string; name?: string; verificationToken?: string }) => Promise<void>
   /**
    * Client-only fallback for static deploys with no backend at all (e.g. a
    * Vercel/GitHub Pages preview of this Netlify-Functions app) — lets a
@@ -59,11 +65,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const requestCode = useCallback((email: string) => api.post<RequestCodeResult>('/api/auth/request-code', { email }), [])
 
-  const verifyCode = useCallback(async (input: { email: string; code: string; name?: string }) => {
-    const res = await api.post<{ user: AuthUser }>('/api/auth/verify-code', input)
-    setUser(res.user)
-    setStatus('authenticated')
-  }, [])
+  const verifyCode = useCallback(
+    async (input: { email: string; code: string; name?: string; verificationToken?: string }) => {
+      const res = await api.post<{ user: AuthUser }>('/api/auth/verify-code', input)
+      setUser(res.user)
+      setStatus('authenticated')
+    },
+    [],
+  )
 
   const loginAsDemo = useCallback(() => {
     setUser(DEMO_USER)

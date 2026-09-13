@@ -29,6 +29,10 @@ export function EmailCodeAuthPage({ onNavigate }: { onNavigate: (route: Route) =
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [resendCooldownMsg, setResendCooldownMsg] = useState<string | null>(null)
+  // Only ever set on the stateless Vercel deployment (see AuthContext's
+  // RequestCodeResult) — carried through to verifyCode unchanged. The
+  // Netlify backend never sends this, so it stays undefined there.
+  const [verificationToken, setVerificationToken] = useState<string | undefined>(undefined)
   // Set only when the sign-in call fails because this deploy has no backend
   // at all (e.g. a static Vercel/GitHub Pages preview of this Netlify-
   // Functions app) — a real, configured server error never sets this.
@@ -40,7 +44,8 @@ export function EmailCodeAuthPage({ onNavigate }: { onNavigate: (route: Route) =
     setNoBackend(false)
     setSubmitting(true)
     try {
-      await requestCode(email.trim().toLowerCase())
+      const result = await requestCode(email.trim().toLowerCase())
+      setVerificationToken(result.verificationToken)
       setStep('code')
     } catch (err) {
       if (err instanceof ApiError && err.backendMissing) {
@@ -57,7 +62,8 @@ export function EmailCodeAuthPage({ onNavigate }: { onNavigate: (route: Route) =
     setError(null)
     setResendCooldownMsg(null)
     try {
-      await requestCode(email.trim().toLowerCase())
+      const result = await requestCode(email.trim().toLowerCase())
+      setVerificationToken(result.verificationToken)
     } catch (err) {
       setResendCooldownMsg(authErrorMessage(err))
     }
@@ -68,7 +74,12 @@ export function EmailCodeAuthPage({ onNavigate }: { onNavigate: (route: Route) =
     setError(null)
     setSubmitting(true)
     try {
-      await verifyCode({ email: email.trim().toLowerCase(), code: code.trim(), name: name.trim() || undefined })
+      await verifyCode({
+        email: email.trim().toLowerCase(),
+        code: code.trim(),
+        name: name.trim() || undefined,
+        verificationToken,
+      })
       onNavigate('dashboard')
     } catch (err) {
       setError(authErrorMessage(err))
