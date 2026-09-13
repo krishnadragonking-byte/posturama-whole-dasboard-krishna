@@ -5,8 +5,8 @@
  * api/_lib/statelessAuth.ts) instead of looking a code up in storage, then
  * issues the same kind of session cookie.
  */
-import { isValidEmail } from '../../src/server/http'
-import { buildSessionCookie, checkVerificationToken, createSessionToken, userIdFromEmail } from '../_lib/statelessAuth'
+import { isValidEmail } from '../../src/server/http.js'
+import { buildSessionCookie, checkVerificationToken, createSessionToken, userIdFromEmail } from '../_lib/statelessAuth.js'
 
 interface VercelReq {
   method?: string

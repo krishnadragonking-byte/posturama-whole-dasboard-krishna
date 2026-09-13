@@ -4,9 +4,9 @@
  * via Resend, same as the Netlify deployment; see api/_lib/statelessAuth.ts
  * for why this one is stateless rather than using Netlify Blobs.
  */
-import { isValidEmail } from '../../src/server/http'
-import { sendVerificationEmail } from '../../src/server/resend'
-import { buildVerificationToken, generateCode } from '../_lib/statelessAuth'
+import { isValidEmail } from '../../src/server/http.js'
+import { sendVerificationEmail } from '../../src/server/resend.js'
+import { buildVerificationToken, generateCode } from '../_lib/statelessAuth.js'
 
 interface VercelReq {
   method?: string

@@ -4,7 +4,7 @@
  * user directly from its signed payload (see api/_lib/statelessAuth.ts) —
  * no storage lookup needed.
  */
-import { parseCookies, sessionCookieName, userIdFromEmail, verifySessionToken } from '../_lib/statelessAuth'
+import { parseCookies, sessionCookieName, userIdFromEmail, verifySessionToken } from '../_lib/statelessAuth.js'
 
 interface VercelReq {
   method?: string

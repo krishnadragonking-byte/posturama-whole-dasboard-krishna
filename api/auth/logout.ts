@@ -2,7 +2,7 @@
  * POST /api/auth/logout — Vercel serverless equivalent of
  * netlify/functions/auth-logout.ts. Clears the session cookie.
  */
-import { buildClearSessionCookie } from '../_lib/statelessAuth'
+import { buildClearSessionCookie } from '../_lib/statelessAuth.js'
 
 interface VercelReq {
   method?: string
