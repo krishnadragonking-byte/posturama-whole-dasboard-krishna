@@ -7,10 +7,19 @@
 
 export class ApiError extends Error {
   status: number
-  constructor(message: string, status: number) {
+  /**
+   * True when the response wasn't JSON at all — this app's own functions
+   * always reply with `{ error }` JSON (see server/http.ts errorResponse), so
+   * a non-JSON error body means there's no backend here to answer the call
+   * (e.g. a static host like Vercel/GitHub Pages with no Netlify Functions),
+   * not a real, configured server rejecting the request.
+   */
+  backendMissing: boolean
+  constructor(message: string, status: number, backendMissing = false) {
     super(message)
     this.name = 'ApiError'
     this.status = status
+    this.backendMissing = backendMissing
   }
 }
 
@@ -37,11 +46,12 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   }
 
   if (!res.ok) {
-    const message =
+    const hasStructuredError =
       data && typeof data === 'object' && 'error' in data && typeof (data as { error: unknown }).error === 'string'
-        ? (data as { error: string }).error
-        : `Something went wrong (${res.status}). Please try again.`
-    throw new ApiError(message, res.status)
+    const message = hasStructuredError
+      ? (data as { error: string }).error
+      : `Something went wrong (${res.status}). Please try again.`
+    throw new ApiError(message, res.status, !hasStructuredError)
   }
 
   return data as T

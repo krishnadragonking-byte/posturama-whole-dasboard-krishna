@@ -15,7 +15,7 @@ const STATUS_TONE: Record<PostureStatus, 'good' | 'adjust'> = {
 }
 
 export function HistoryPage({ onNavigate }: { onNavigate: (route: Route) => void }) {
-  const { user, logout } = useAuth()
+  const { user, logout, isDemoSession } = useAuth()
   const { records, status, error, refresh } = useHistory()
 
   const handleLogout = async () => {
@@ -26,7 +26,13 @@ export function HistoryPage({ onNavigate }: { onNavigate: (route: Route) => void
   return (
     <div className="hist-shell">
       <div className="hist-container">
-        <AppHeader userName={user?.name ?? ''} activeRoute="history" onNavigate={onNavigate} onLogout={handleLogout} />
+        <AppHeader
+          userName={user?.name ?? ''}
+          activeRoute="history"
+          onNavigate={onNavigate}
+          onLogout={handleLogout}
+          isDemoSession={isDemoSession}
+        />
 
         <h1 className="hist-title">Activity History</h1>
         <p className="hist-subtitle">Every posture check you&rsquo;ve completed and saved.</p>

@@ -24,7 +24,7 @@ const STATUS_TONE: Record<PostureStatus, 'good' | 'adjust'> = {
 const RECENT_ACTIVITY_LIMIT = 5
 
 export function DashboardPage({ onNavigate }: { onNavigate: (route: Route) => void }) {
-  const { user, logout } = useAuth()
+  const { user, logout, isDemoSession } = useAuth()
   const { records, status, error, refresh } = useHistory()
   const uploadInputRef = useRef<HTMLInputElement | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
@@ -62,6 +62,7 @@ export function DashboardPage({ onNavigate }: { onNavigate: (route: Route) => vo
           activeRoute="dashboard"
           onNavigate={onNavigate}
           onLogout={handleLogout}
+          isDemoSession={isDemoSession}
         />
 
         <Card className="dash-hero">

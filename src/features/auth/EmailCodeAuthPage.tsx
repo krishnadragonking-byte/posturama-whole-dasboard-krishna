@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { Button, Card } from '../../design-system/ui'
+import { Button, Card, Notice } from '../../design-system/ui'
+import { ApiError } from '../../lib/api'
 import type { Route } from '../../routes'
 import { authErrorMessage, useAuth } from './AuthContext'
 import './auth.css'
@@ -20,7 +21,7 @@ type Step = 'email' | 'code'
  * creates the account (see auth-verify-code.ts).
  */
 export function EmailCodeAuthPage({ onNavigate }: { onNavigate: (route: Route) => void }) {
-  const { requestCode, verifyCode } = useAuth()
+  const { requestCode, verifyCode, loginAsDemo } = useAuth()
   const [step, setStep] = useState<Step>('email')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -28,16 +29,25 @@ export function EmailCodeAuthPage({ onNavigate }: { onNavigate: (route: Route) =
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [resendCooldownMsg, setResendCooldownMsg] = useState<string | null>(null)
+  // Set only when the sign-in call fails because this deploy has no backend
+  // at all (e.g. a static Vercel/GitHub Pages preview of this Netlify-
+  // Functions app) — a real, configured server error never sets this.
+  const [noBackend, setNoBackend] = useState(false)
 
   const handleSendCode = async (e: FormEvent) => {
     e.preventDefault()
     setError(null)
+    setNoBackend(false)
     setSubmitting(true)
     try {
       await requestCode(email.trim().toLowerCase())
       setStep('code')
     } catch (err) {
-      setError(authErrorMessage(err))
+      if (err instanceof ApiError && err.backendMissing) {
+        setNoBackend(true)
+      } else {
+        setError(authErrorMessage(err))
+      }
     } finally {
       setSubmitting(false)
     }
@@ -89,6 +99,27 @@ export function EmailCodeAuthPage({ onNavigate }: { onNavigate: (route: Route) =
                 <p className="auth-error" role="alert">
                   {error}
                 </p>
+              ) : null}
+
+              {noBackend ? (
+                <div style={{ marginBottom: '1.1rem' }}>
+                  <Notice title="Demo mode — no live backend here">
+                    This preview is hosted somewhere that can&rsquo;t send real sign-in emails. You
+                    can continue with a demo account to explore the Dashboard instead.
+                  </Notice>
+                  <div style={{ marginTop: '0.9rem' }}>
+                    <Button
+                      block
+                      variant="secondary"
+                      onClick={() => {
+                        loginAsDemo()
+                        onNavigate('dashboard')
+                      }}
+                    >
+                      Continue in demo mode
+                    </Button>
+                  </div>
+                </div>
               ) : null}
 
               <form onSubmit={handleSendCode} noValidate>

@@ -204,18 +204,29 @@
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
+.dash-session-title {
+  font-size: 1.2rem;
+  font-weight: 780;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.6rem;
+}
 .dash-session-label {
   font-size: 0.78rem;
   font-weight: 650;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--pt-text-faint);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
 }
-.dash-session-title {
-  font-size: 1.2rem;
-  font-weight: 780;
+.dash-session-activity {
+  font-size: 1.02rem;
+  font-weight: 700;
   letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+.dash-session-desc {
+  font-size: 0.86rem;
+  color: var(--pt-text-muted);
 }
 
 .dash-session-status {
@@ -236,6 +247,11 @@
   height: 8px;
   border-radius: 50%;
   background: currentColor;
+  flex: none;
+}
+.dash-session-status__check {
+  font-size: 0.85em;
+  line-height: 1;
   flex: none;
 }
 .dash-session-status--idle {

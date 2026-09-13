@@ -5,7 +5,7 @@
  */
 import './ui.css'
 import type { Route } from '../routes'
-import { Button } from './ui'
+import { Button, StatusPill } from './ui'
 
 const Logo = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -24,25 +24,30 @@ export function AppHeader({
   activeRoute,
   onNavigate,
   onLogout,
+  isDemoSession = false,
 }: {
   userName: string
   activeRoute: Route
   onNavigate: (route: Route) => void
   onLogout: () => void
+  isDemoSession?: boolean
 }) {
   return (
     <header className="pt-appheader">
-      <button
-        type="button"
-        className="pt-appheader__brand"
-        onClick={() => onNavigate('dashboard')}
-        aria-label="Go to dashboard"
-      >
-        <span className="pt-appheader__logo" aria-hidden="true">
-          <Logo />
-        </span>
-        <span className="pt-appheader__wordmark">Posturama</span>
-      </button>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <button
+          type="button"
+          className="pt-appheader__brand"
+          onClick={() => onNavigate('dashboard')}
+          aria-label="Go to dashboard"
+        >
+          <span className="pt-appheader__logo" aria-hidden="true">
+            <Logo />
+          </span>
+          <span className="pt-appheader__wordmark">Posturama</span>
+        </button>
+        {isDemoSession ? <StatusPill tone="info">Demo mode — not a real account</StatusPill> : null}
+      </div>
 
       <nav className="pt-appheader__nav" aria-label="Dashboard">
         {NAV_LINKS.map((link) => (

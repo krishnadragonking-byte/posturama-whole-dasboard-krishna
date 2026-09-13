@@ -5,7 +5,7 @@ type SessionStatus = 'idle' | 'running' | 'paused' | 'completed'
 
 const STATUS_LABEL: Record<SessionStatus, string> = {
   idle: 'Not started',
-  running: 'In progress',
+  running: 'Session active',
   paused: 'Paused',
   completed: 'Completed',
 }
@@ -88,15 +88,23 @@ export function HomeExerciseSessionCard() {
     <Card pad className="dash-session">
       <div className="dash-session-header">
         <div>
-          <p className="dash-session-label">Mock therapist-provided activity</p>
-          <h2 className="dash-session-title">Seated Mobility Demo</h2>
+          <h2 className="dash-session-title">Home Exercise Session</h2>
+          <p className="dash-session-label">Therapist-provided activity</p>
+          <p className="dash-session-activity">Mock Mobility Session</p>
+          <p className="dash-session-desc">Example therapist-provided activity for prototype testing.</p>
         </div>
         <span
           className={`dash-session-status dash-session-status--${status}`}
           role="status"
           aria-live="polite"
         >
-          <span className="dash-session-status__dot" aria-hidden="true" />
+          {status === 'completed' ? (
+            <span className="dash-session-status__check" aria-hidden="true">
+              ✓
+            </span>
+          ) : (
+            <span className="dash-session-status__dot" aria-hidden="true" />
+          )}
           {STATUS_LABEL[status]}
         </span>
       </div>
@@ -148,14 +156,12 @@ export function HomeExerciseSessionCard() {
           disabled={!canToggleCompleted}
           onChange={(e) => handleToggleCompleted(e.target.checked)}
         />
-        <label htmlFor={checkboxId}>Demo session completed</label>
+        <label htmlFor={checkboxId}>Mark session as completed</label>
       </div>
 
       <div style={{ marginTop: '1.25rem' }}>
-        <Notice title="About this prototype">
-          This prototype uses mock session data to demonstrate how a user could start, pause, and
-          complete a therapist-provided session. It does not prescribe exercises or measure
-          recovery.
+        <Notice title="Prototype only — mock data">
+          This timer does not prescribe exercises or measure recovery.
         </Notice>
       </div>
     </Card>

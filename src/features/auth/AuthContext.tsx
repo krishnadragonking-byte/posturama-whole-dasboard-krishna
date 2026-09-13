@@ -13,18 +13,30 @@ interface RequestCodeResult {
 interface AuthContextValue {
   status: AuthStatus
   user: AuthUser | null
+  /** True for the client-only demo session started by loginAsDemo — never a real signed-in user. */
+  isDemoSession: boolean
   /** Emails a 6-digit sign-in code to this address (works for both new and returning users). */
   requestCode: (email: string) => Promise<RequestCodeResult>
   /** Verifies the code; `name` is only used the first time an email signs in. */
   verifyCode: (input: { email: string; code: string; name?: string }) => Promise<void>
+  /**
+   * Client-only fallback for static deploys with no backend at all (e.g. a
+   * Vercel/GitHub Pages preview of this Netlify-Functions app) — lets a
+   * viewer see the Dashboard without a real account. Never touches the
+   * server, never claims to be a real signed-in user (see isDemoSession).
+   */
+  loginAsDemo: () => void
   logout: () => Promise<void>
 }
+
+const DEMO_USER: AuthUser = { id: 'demo', name: 'Demo Viewer', email: 'demo@posturama.app' }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>('loading')
   const [user, setUser] = useState<AuthUser | null>(null)
+  const [isDemoSession, setIsDemoSession] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -53,20 +65,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setStatus('authenticated')
   }, [])
 
-  const logout = useCallback(async () => {
-    try {
-      await api.post('/api/auth/logout')
-    } catch {
-      // Even if the network call fails, clear local state so the UI doesn't
-      // strand the user in a signed-in-looking screen.
-    }
-    setUser(null)
-    setStatus('unauthenticated')
+  const loginAsDemo = useCallback(() => {
+    setUser(DEMO_USER)
+    setIsDemoSession(true)
+    setStatus('authenticated')
   }, [])
 
+  const logout = useCallback(async () => {
+    if (!isDemoSession) {
+      try {
+        await api.post('/api/auth/logout')
+      } catch {
+        // Even if the network call fails, clear local state so the UI doesn't
+        // strand the user in a signed-in-looking screen.
+      }
+    }
+    setUser(null)
+    setIsDemoSession(false)
+    setStatus('unauthenticated')
+  }, [isDemoSession])
+
   const value = useMemo(
-    () => ({ status, user, requestCode, verifyCode, logout }),
-    [status, user, requestCode, verifyCode, logout],
+    () => ({ status, user, isDemoSession, requestCode, verifyCode, loginAsDemo, logout }),
+    [status, user, isDemoSession, requestCode, verifyCode, loginAsDemo, logout],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
